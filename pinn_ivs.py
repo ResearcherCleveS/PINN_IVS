@@ -37,7 +37,7 @@ S = torch.linspace(1e-5, S_max, 50)
 t = torch.linspace(1e-5, T, 50)
 S_grid, t_grid = torch.meshgrid(S, t, indexing='ij')
 S_grid2, t_grid2 = torch.meshgrid(S.squeeze(), t.squeeze(), indexing='ij')  # rowwise, colwise
-S_grid[:, 0], S_grid2[:, 1], t_grid[0, :], t_grid2[0, :]
+# S_grid[:, 0], S_grid2[:, 1], t_grid[0, :], t_grid2[0, :]
 
 # Device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
