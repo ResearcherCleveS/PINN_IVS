@@ -1,4 +1,4 @@
-import streamlit
+import streamlit as st
 import torch
 import torch.nn as nn
 import numpy as np
