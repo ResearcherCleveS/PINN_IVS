@@ -160,8 +160,8 @@ for epoch in range(1000):
     loss.backward()
     optimizer.step()
     loss_history.append(loss.item())
-    if epoch % 50 == 0:
-        print(f"Epoch {epoch}, Loss: {loss.item():.6f}")
+    # if epoch % 50 == 0:
+    #     print(f"Epoch {epoch}, Loss: {loss.item():.6f}")
 # Create the training data -------------------------------------------------
 ticker_symbol = yf.Ticker('aapl')
 ticker_symbol
@@ -254,4 +254,4 @@ fig.update_layout(
         yaxis_title="Moneyness (S/K)",
         zaxis_title='Implied Volatility (%)'
 ))
-fig.show()
+st.plotly_chart(fig)
