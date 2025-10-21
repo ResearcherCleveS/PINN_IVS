@@ -1,0 +1,14 @@
+streamlit
+torch
+yfinance
+pandas
+numpy
+scipy
+plotly
+matplotlib
+apikey
+langchain
+langchain_community
+openai
+OpenAI
+python-dotenv
