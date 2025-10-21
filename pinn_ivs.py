@@ -38,21 +38,6 @@ t = torch.linspace(1e-5, T, 50)
 S_grid, t_grid = torch.meshgrid(S, t, indexing='ij')
 S_grid2, t_grid2 = torch.meshgrid(S.squeeze(), t.squeeze(), indexing='ij')  # rowwise, colwise
 S_grid[:, 0], S_grid2[:, 1], t_grid[0, :], t_grid2[0, :]
-# %%
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 16 20:52:54 2025
-
-@author: sylvestercleveland
-"""
-
-import torch
-import torch.nn as nn
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-from scipy.special import gamma
 
 # Device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
