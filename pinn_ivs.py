@@ -13,7 +13,7 @@ import plotly.io as pio
 pio.renderers.default = 'browser'
 import plotly.graph_objects as go
 
-st.title("Physics Informed Neural Network to Model and Calculate Implied Volatilit Surface with Market Data")
+st.title("Physics Informed Neural Network to Model and Calculate Implied Volatility Surface with Market Data")
 
 st.sidebar.header("Orders of Caputo Derivative with GL Scheme")
 alpha_1 = st.sidebar.slider("𝗗𝛂", min_value=0.0, max_value=1.0, value=0.10, step=0.10, format='%.3f')
