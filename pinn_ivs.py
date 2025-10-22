@@ -16,13 +16,33 @@ import plotly.graph_objects as go
 
 st.title("Physics Informed Neural Network to Model and Calculate Implied Volatility Surface with Market Data")
 
+# %%
+"""
+Created on Thu Oct 16 20:52:54 2025
+
+@author: sylvestercleveland
+"""
+
 st.sidebar.header("Orders of Caputo Derivative with GL Scheme")
 st.sidebar.write('Adjust the parameters for the Black-Scholes model.')
 alpha = st.sidebar.number_input(
-    'Caputo w/ gL scheme order alpha (e.g., 0.3 from 0.1 to 1.0)',
+    'Caputo w/ GL scheme order alpha (e.g., 0.3 from 0.1 to 1.0)',
     value=0.07,
     format="%.2f"
 )
+
+risk_free_rate = st.sidebar.number_input(
+    'Risk-Free Rate (e.g., 0.015 for 1.5%)',
+    value=0.010,
+    format="%.3f"
+)
+
+dividend_yield = st.sidebar.number_input(
+    'Dividend Yield (e.g., 0.013 for 1.3%)',
+    value=0.000,
+    format="%.3f"
+)
+
 # alpha_1 = st.sidebar.slider("𝗗𝛂", min_value=0.0, max_value=1.0, value=0.10, step=0.10, format='%.3f')
 # alpha_2 = st.sidebar.slider("2nd 𝛂", min_value=0.0, max_value=1.0, value=0.30, step=0.10, format='%.3f')
 # alpha_3 = st.sidebar.slider("3rd 𝛂", min_value=0.0, max_value=1.0, value=0.70, step=0.10, format='%.3f')
