@@ -175,6 +175,12 @@ with st.spinner('Training PINN of implied volatility surface...'):
 ticker = yf.Ticker(ticker_symbol)
 expirations = ticker.options
 
+try:
+    expirations = ticker.options
+except Exception as e:
+    st.error(f'Error fetching options for {ticker_symbol}: {e}')
+    st.stop()
+
 today = pd.Timestamp('today').normalize()
 exp_dates = [pd.Timestamp(exp) for exp in expirations if pd.Timestamp(exp) > today + timedelta(days=7)]
 option_data = []
