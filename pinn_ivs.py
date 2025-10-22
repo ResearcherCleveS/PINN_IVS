@@ -43,6 +43,13 @@ dividend_yield = st.sidebar.number_input(
     format="%.3f"
 )
 
+st.sidebar.header('Ticker Symbol')
+ticker_symbol = st.sidebar.text_input(
+    'Enter Ticker Symbol',
+    value='AAPL',
+    max_chars=10
+).upper()
+
 # alpha_1 = st.sidebar.slider("𝗗𝛂", min_value=0.0, max_value=1.0, value=0.10, step=0.10, format='%.3f')
 # alpha_2 = st.sidebar.slider("2nd 𝛂", min_value=0.0, max_value=1.0, value=0.30, step=0.10, format='%.3f')
 # alpha_3 = st.sidebar.slider("3rd 𝛂", min_value=0.0, max_value=1.0, value=0.70, step=0.10, format='%.3f')
@@ -165,8 +172,8 @@ with st.spinner('Training PINN of implied volatility surface...'):
             st.write(f"Epoch {epoch}, Loss: {loss.item():.6f}")
 
 # Create the training data -------------------------------------------------
-ticker_symbol = yf.Ticker('aapl')
-expirations = ticker_symbol.options
+ticker = yf.Ticker(ticker_symbol)
+expirations = ticker.options
 
 today = pd.Timestamp('today').normalize()
 exp_dates = [pd.Timestamp(exp) for exp in expirations if pd.Timestamp(exp) > today + timedelta(days=7)]
