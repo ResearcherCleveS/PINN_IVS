@@ -147,7 +147,7 @@ tau = tau.reshape(-1,1)         # <-- collocation temporal points.
 N = int(np.sqrt(len(X)))
 
 loss_history = []
-with st.spinner('Calculating implied volatility...'):
+with st.spinner('Training PINN of implied volatility surface...'):
     for epoch in range(1000):
         optimizer.zero_grad()
         loss_pde = pde_loss(model, X, alpha)    # <-- The X is Size 50. May need Size 2500.
@@ -172,23 +172,24 @@ today = pd.Timestamp('today').normalize()
 exp_dates = [pd.Timestamp(exp) for exp in expirations if pd.Timestamp(exp) > today + timedelta(days=7)]
 option_data = []
 exp_dates
-for exp_date in exp_dates:
-    opt_chain = ticker_symbol.option_chain(exp_date.strftime('%Y-%m-%d'))
-    calls = opt_chain.calls
-    calls = calls[(calls['bid'] > 0) & (calls['ask'] > 0)]
-    for index, row in calls.iterrows():
-        strike = row['strike']
-        bid = row['bid']
-        ask = row['ask']
-        mid_price = (bid + ask) / 2
-        # option_data generation
-        option_data.append({
-            'expirationDate': exp_date,
-            'strike': strike,
-            'bid': bid,
-            'ask': ask,
-            'mid': mid_price
-        })
+with st.spinner('Calculating implied volatility surface...'):
+    for exp_date in exp_dates:
+        opt_chain = ticker_symbol.option_chain(exp_date.strftime('%Y-%m-%d'))
+        calls = opt_chain.calls
+        calls = calls[(calls['bid'] > 0) & (calls['ask'] > 0)]
+        for index, row in calls.iterrows():
+            strike = row['strike']
+            bid = row['bid']
+            ask = row['ask']
+            mid_price = (bid + ask) / 2
+            # option_data generation
+            option_data.append({
+                'expirationDate': exp_date,
+                'strike': strike,
+                'bid': bid,
+                'ask': ask,
+                'mid': mid_price
+            })
 
 options_df = pd.DataFrame(option_data)
 spot_history = ticker_symbol.history(period='5d')
