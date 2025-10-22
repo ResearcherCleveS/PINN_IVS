@@ -21,7 +21,7 @@ st.sidebar.write('Adjust the parameters for the Black-Scholes model.')
 alpha = st.sidebar.number_input(
     'Caputo w/ gL scheme order alpha (e.g., 0.3 from 0.1 to 1.0)',
     value=0.07,
-    format="%.3f"
+    format="%.2f"
 )
 # alpha_1 = st.sidebar.slider("𝗗𝛂", min_value=0.0, max_value=1.0, value=0.10, step=0.10, format='%.3f')
 # alpha_2 = st.sidebar.slider("2nd 𝛂", min_value=0.0, max_value=1.0, value=0.30, step=0.10, format='%.3f')
