@@ -234,7 +234,7 @@ S_eval, t_eval = torch.meshgrid(X.ravel(), Y.ravel(), indexing='ij')
 X_eval = torch.stack([S_eval.flatten(), t_eval.flatten()], dim=1) #.to(device)
 x_eval = torch.stack([X.flatten(), Y.flatten()], dim=1) #.to(device)
 
-V_pred = model(X_eval).view(X.shape[0], X.shape[0]) #.detach().cpu().numpy()#.view(19,19).detach().cpu().numpy()
+V_pred = model(X_eval).view(X.shape[0], X.shape[0]).detach() #.detach().cpu().numpy()#.view(19,19).detach().cpu().numpy()
 
 Z_pred = griddata((S_eval.ravel(), t_eval.ravel()), V_pred.ravel(), (S_eval, t_eval), method='linear')
 # Z_pred = griddata((X.ravel(), Y.ravel()), V_pred.ravel(), (S_eval, t_eval), method='linear')
