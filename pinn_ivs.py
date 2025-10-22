@@ -18,7 +18,7 @@ st.title("Physics Informed Neural Network to Model and Calculate Implied Volatil
 
 # %%
 """
-Created sylvestercleveland | SCLEVEL3@ALUMNI.JH.EDU
+Creator sylvestercleveland | SCLEVEL3@ALUMNI.JH.EDU
 
 """
 
