@@ -94,7 +94,7 @@ class PINN(nn.Module):
 # Caputo Approximation using GL scheme
 def caputo_GL(f, dt, alpha):
     N = f.ravel().shape[0]
-    coeffs = torch.tensor([(-1)**k * gamma(alpha + 1)/(gamma(k + 1)*gamma(alpha - k + 1)) for k in range(N)], device=device)
+    coeffs = torch.tensor([(-1)**k * gamma(alpha + 1)/(gamma(k + 1)*gamma(alpha - k + 1)) for k in range(N)]) #, device=device)
     conv = torch.nn.functional.conv1d(f.view(1,1,-1), coeffs.flip(0).float().view(1,1,-1), padding=0)
     return conv.view(-1) / dt**alpha
 
