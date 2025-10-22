@@ -53,7 +53,7 @@ dividend_yield = st.sidebar.number_input(
 # Parameters
 r = risk_free_rate #0.05     # Risk-free rate
 sigma_true = 0.35  # True (constant) volatility
-alpha = 0.7   # Fractional order
+alpha = alpha #0.7   # Fractional order
 T = 1.0       # Maturity
 K = 10     # Strike
 S_max = 20   # Max stock price
