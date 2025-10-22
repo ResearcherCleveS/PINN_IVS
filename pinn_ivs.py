@@ -18,22 +18,21 @@ st.title("Physics Informed Neural Network to Model and Calculate Implied Volatil
 
 # %%
 """
-Created on Thu Oct 16 20:52:54 2025
+Created sylvestercleveland | SCLEVEL3@ALUMNI.JH.EDU
 
-@author: sylvestercleveland
 """
 
 st.sidebar.header("Orders of Caputo Derivative with GL Scheme")
 st.sidebar.write('Adjust the parameters for the Black-Scholes model.')
 alpha = st.sidebar.number_input(
     'Caputo w/ GL scheme order alpha (e.g., 0.3 from 0.1 to 1.0)',
-    value=0.07,
+    value=0.7,
     format="%.2f"
 )
 
 risk_free_rate = st.sidebar.number_input(
-    'Risk-Free Rate (e.g., 0.015 for 1.5%)',
-    value=0.010,
+    'Risk-Free Interest Rate (e.g., 0.050 for 0.5%)',
+    value=0.050,
     format="%.3f"
 )
 
