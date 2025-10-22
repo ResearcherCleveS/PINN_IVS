@@ -48,15 +48,15 @@ dividend_yield = st.sidebar.number_input(
 # alpha_4 = st.sidebar.slider("4th 𝛂", min_value=0.0, max_value=1.0, value=0.90, step=0.10, format='%.3f')
 
 # Device
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Parameters
-r = 0.05     # Risk-free rate
+r = risk_free_rate #0.05     # Risk-free rate
 sigma_true = 0.35  # True (constant) volatility
 alpha = 0.7   # Fractional order
 T = 1.0       # Maturity
-K = 10      # Strike
-S_max = 100   # Max stock price
+K = 10     # Strike
+S_max = 20   # Max stock price
 
 S = torch.linspace(1e-5, S_max, 50)
 t = torch.linspace(1e-5, T, 50)
@@ -64,16 +64,6 @@ S_grid, t_grid = torch.meshgrid(S, t, indexing='ij')
 S_grid2, t_grid2 = torch.meshgrid(S.squeeze(), t.squeeze(), indexing='ij')  # rowwise, colwise
 # S_grid[:, 0], S_grid2[:, 1], t_grid[0, :], t_grid2[0, :]
 
-# Device
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-# Parameters
-r = 0.01   # Risk-free rate
-sigma_true = 0.35  # True (constant) volatility
-alpha = 0.8   # Fractional order
-T = 1.0       # Maturity
-K = 100   # Strike
-S_max = 20  # Max stock price
 # Synthetic European Call Price (Black-Scholes)
 def bs_call_price(S, K, T, r, sigma):
     d1 = (np.log(S/K) + (r + 0.5 * sigma**2)*T)/(sigma*np.sqrt(T))
@@ -145,7 +135,7 @@ def pde_loss(model, X, alpha, vol=0.2):
     return torch.mean(pde_residual**2)
 
 # Main Training Loop
-model = PINN().to(device)
+model = PINN() #.to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 # S_grid, t_grid, X = generate_grid()
 N = 50 #200 #50
@@ -172,6 +162,7 @@ for epoch in range(1000):
     loss_history.append(loss.item())
     # if epoch % 50 == 0:
     #     print(f"Epoch {epoch}, Loss: {loss.item():.6f}")
+
 # Create the training data -------------------------------------------------
 ticker_symbol = yf.Ticker('aapl')
 ticker_symbol
@@ -239,10 +230,10 @@ N = options_df['timeToExpiration'].values.shape[0]
 S_test = torch.linspace(X.min(), X.max(), N)
 t_test = torch.linspace(Y.min(), Y.max(), N)
 S_eval, t_eval = torch.meshgrid(X.ravel(), Y.ravel(), indexing='ij')
-X_eval = torch.stack([S_eval.flatten(), t_eval.flatten()], dim=1).to(device)
-x_eval = torch.stack([X.flatten(), Y.flatten()], dim=1).to(device)
+X_eval = torch.stack([S_eval.flatten(), t_eval.flatten()], dim=1) #.to(device)
+x_eval = torch.stack([X.flatten(), Y.flatten()], dim=1) #.to(device)
 
-V_pred = model(X_eval).view(X.shape[0], X.shape[0]).detach().cpu().numpy()#.view(19,19).detach().cpu().numpy()
+V_pred = model(X_eval).view(X.shape[0], X.shape[0]) #.detach().cpu().numpy()#.view(19,19).detach().cpu().numpy()
 
 Z_pred = griddata((S_eval.ravel(), t_eval.ravel()), V_pred.ravel(), (S_eval, t_eval), method='linear')
 # Z_pred = griddata((X.ravel(), Y.ravel()), V_pred.ravel(), (S_eval, t_eval), method='linear')
