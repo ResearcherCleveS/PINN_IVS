@@ -166,7 +166,6 @@ with st.spinner('Training PINN of implied volatility surface...'):
 
 # Create the training data -------------------------------------------------
 ticker_symbol = yf.Ticker('aapl')
-ticker_symbol
 expirations = ticker_symbol.options
 
 today = pd.Timestamp('today').normalize()
