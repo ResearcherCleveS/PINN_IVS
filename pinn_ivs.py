@@ -171,7 +171,7 @@ expirations = ticker_symbol.options
 today = pd.Timestamp('today').normalize()
 exp_dates = [pd.Timestamp(exp) for exp in expirations if pd.Timestamp(exp) > today + timedelta(days=7)]
 option_data = []
-exp_dates
+
 with st.spinner('Calculating implied volatility surface...'):
     for exp_date in exp_dates:
         opt_chain = ticker_symbol.option_chain(exp_date.strftime('%Y-%m-%d'))
