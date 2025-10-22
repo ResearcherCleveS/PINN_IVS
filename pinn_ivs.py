@@ -187,7 +187,7 @@ option_data = []
 
 with st.spinner('Calculating implied volatility surface...'):
     for exp_date in exp_dates:
-        opt_chain = ticker_symbol.option_chain(exp_date.strftime('%Y-%m-%d'))
+        opt_chain = ticker.option_chain(exp_date.strftime('%Y-%m-%d'))
         calls = opt_chain.calls
         calls = calls[(calls['bid'] > 0) & (calls['ask'] > 0)]
         for index, row in calls.iterrows():
