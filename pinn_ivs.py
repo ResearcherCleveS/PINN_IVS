@@ -255,5 +255,10 @@ fig.update_layout(
         xaxis_title='Time to Expiration (years)',
         yaxis_title="Moneyness (S/K)",
         zaxis_title='Implied Volatility (%)'
-))
+        ),
+        autosize=False,
+        width=900,
+        height=800,
+        margin=dict(l=65, r=50, b=65, t=90)
+)
 st.plotly_chart(fig)
