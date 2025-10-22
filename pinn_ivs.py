@@ -161,7 +161,7 @@ with st.spinner('Training PINN of implied volatility surface...'):
         optimizer.step()
         loss_history.append(loss.item())
         if epoch % 50 == 0:
-            print(f"Epoch {epoch}, Loss: {loss.item():.6f}")
+            st.write(f"Epoch {epoch}, Loss: {loss.item():.6f}")
 
 # Create the training data -------------------------------------------------
 ticker_symbol = yf.Ticker('aapl')
