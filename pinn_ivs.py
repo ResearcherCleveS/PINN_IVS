@@ -263,7 +263,7 @@ fig = go.Figure(data=[go.Surface(#z=V_pred.reshape(X.shape[0], Y.shape[0]),#V_pr
     opacity=0.75
 )])
 fig.update_layout(
-    title=f'Implied Volatility Surface for {ticker_symbol} Options',
+    title=f'Implied Volatility Surface for {ticker} Options',
     scene=dict(
         xaxis_title='Time to Expiration (years)',
         yaxis_title="Moneyness (S/K)",
