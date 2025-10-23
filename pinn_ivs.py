@@ -205,7 +205,7 @@ with st.spinner('Calculating implied volatility surface...'):
             })
 
 options_df = pd.DataFrame(option_data)
-spot_history = ticker_symbol.history(period='5d')
+spot_history = ticker.history(period='5d')
 spot_price = spot_history['Close'].iloc[-1]
 
 options_df['daysToExpiration'] = (options_df['expirationDate'] - today).dt.days
