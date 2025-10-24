@@ -159,8 +159,8 @@ with st.spinner('Training PINN of implied volatility surface...'):
     for epoch in range(1000):
         optimizer.zero_grad()
         loss_pde = pde_loss(model, X, alpha)    # <-- The X is Size 50. May need Size 2500.
-        u_pred_left = model(torch.stack([torch.full_like(t.ravel(), x.min().item()), t.ravel()], dim=1)).to(device))  # u(0, t)
-        u_pred_right = model(torch.stack([torch.full_like(t.ravel(), x.max().item()), t.ravel()], dim=1)).to(device))  # u(1, t)
+        u_pred_left = model(torch.stack([torch.full_like(t.ravel(), x.min().item()), t.ravel()], dim=1))#.to(device))  # u(0, t)
+        u_pred_right = model(torch.stack([torch.full_like(t.ravel(), x.max().item()), t.ravel()], dim=1))#.to(device))  # u(1, t)
         loss_bc = torch.mean((u_pred_left - boundary_condition(torch.full_like(t.ravel(), x.min().item()), t.ravel())) ** 2) + \
                   torch.mean((u_pred_right - boundary_condition(torch.full_like(t.ravel(), x.min().item()), t.ravel()))**2)
         # loss_bc = boundary_loss(model, S_grid, t_grid)
