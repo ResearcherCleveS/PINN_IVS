@@ -56,7 +56,7 @@ ticker_symbol = st.sidebar.text_input(
 # alpha_4 = st.sidebar.slider("4th 𝛂", min_value=0.0, max_value=1.0, value=0.90, step=0.10, format='%.3f')
 
 # Device
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Parameters
 r = risk_free_rate #0.05     # Risk-free rate
@@ -102,7 +102,7 @@ class PINN(nn.Module):
 # Caputo Approximation using GL scheme
 def caputo_GL(f, dt, alpha):
     N = f.ravel().shape[0]
-    coeffs = torch.tensor([(-1)**k * gamma(alpha + 1)/(gamma(k + 1)*gamma(alpha - k + 1)) for k in range(N)]) #, device=device)
+    coeffs = torch.tensor([(-1)**k * gamma(alpha + 1)/(gamma(k + 1)*gamma(alpha - k + 1)) for k in range(N)]), device=device)
     conv = torch.nn.functional.conv1d(f.view(1,1,-1), coeffs.flip(0).float().view(1,1,-1), padding=0)
     return conv.view(-1) / dt**alpha
 
@@ -117,7 +117,7 @@ def boundary_loss(model, S_grid, t_grid):
 
 def boundary_condition(x, t, K=10, r=0.01):
   # May be can try all zeros?
-  return torch.maximum(x - K, torch.tensor(0.0)) #torch.where(x == 0, K * torch.exp(-r * t), torch.zeros_like(t)) #K * torch.exp(-r * t), torch.zeros_like(t))
+  return torch.maximum(x - K, torch.tensor(0.0, device=device)) #torch.where(x == 0, K * torch.exp(-r * t), torch.zeros_like(t)) #K * torch.exp(-r * t), torch.zeros_like(t))
 
 # Residual loss from PDE
 def pde_loss(model, X, alpha, vol=0.2):
@@ -159,8 +159,8 @@ with st.spinner('Training PINN of implied volatility surface...'):
     for epoch in range(1000):
         optimizer.zero_grad()
         loss_pde = pde_loss(model, X, alpha)    # <-- The X is Size 50. May need Size 2500.
-        u_pred_left = model(torch.stack([torch.full_like(t.ravel(), x.min().item()), t.ravel()], dim=1)) #.to(device))  # u(0, t)
-        u_pred_right = model(torch.stack([torch.full_like(t.ravel(), x.max().item()), t.ravel()], dim=1)) #.to(device))  # u(1, t)
+        u_pred_left = model(torch.stack([torch.full_like(t.ravel(), x.min().item()), t.ravel()], dim=1)).to(device))  # u(0, t)
+        u_pred_right = model(torch.stack([torch.full_like(t.ravel(), x.max().item()), t.ravel()], dim=1)).to(device))  # u(1, t)
         loss_bc = torch.mean((u_pred_left - boundary_condition(torch.full_like(t.ravel(), x.min().item()), t.ravel())) ** 2) + \
                   torch.mean((u_pred_right - boundary_condition(torch.full_like(t.ravel(), x.min().item()), t.ravel()))**2)
         # loss_bc = boundary_loss(model, S_grid, t_grid)
