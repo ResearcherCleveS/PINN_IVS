@@ -256,8 +256,8 @@ Z_pred = np.ma.array(Z_pred, mask=np.isnan(Z_pred))
 x = torch.linspace(0, 1, V_pred.shape[0])
 y = torch.linspace(0, 20, V_pred.shape[0])
 
-fig = go.Figure(data=[go.Surface(#z=V_pred.reshape(X.shape[0], Y.shape[0]),#V_pred, #.reshape(N,N),#z=u_pred_pt2.reshape(N, N),
-    x=S_eval, y=t_eval, z=V_pred,#.reshape(M, M) * 10, #u_pred_pt2.reshape(M, M) * 10,
+fig = go.Figure(data=[go.Surface(z=V_pred,#.reshape(X.shape[0], Y.shape[0]),#V_pred, #.reshape(N,N),#z=u_pred_pt2.reshape(N, N),
+    # x=S_eval, y=t_eval, z=V_pred,#.reshape(M, M) * 10, #u_pred_pt2.reshape(M, M) * 10,
     colorscale='Viridis',
     showscale=True,
     opacity=0.75
